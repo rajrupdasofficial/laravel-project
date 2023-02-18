@@ -2,7 +2,7 @@ image: php:latest
 
 pipelines:
   branches:
-  '{master,hotdev}':
+  master,hotdev:
     - step:
         name: Node Build
         image: node:latest
