@@ -11,7 +11,6 @@ laravelCompile:
   image: php
   stage: laravel
   script:
-    -  mkdir /usr/share/man/man1
     - apt-get update && apt-get install -qy git zip curl libmcrypt-dev default-mysql-client libxml2-dev default-jre wget maven
     - yes | pecl install mcrypt
     - docker-php-ext-install pdo_mysql bcmath
