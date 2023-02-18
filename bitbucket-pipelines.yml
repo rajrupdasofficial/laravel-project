@@ -1,7 +1,8 @@
 image: php:latest
 
 pipelines:
-  default:
+  branches:
+  '{master,hotdev}':
     - step:
         name: Node Build
         image: node:latest
