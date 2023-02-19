@@ -1,11 +1,8 @@
-<h1>Listing</h1>
-@unless (count($listings)==0)
-    @foreach($listings as $listing)
-    <h2>
-       <a href="/listings/{{$listing['id']}}">{{$listing['title']}}</a>
-    </h2>
-    <p>
-        {{$listing['description']}}
-    </p>
-    @endforeach
-@endunless
+@extends('layout')
+@section('content')
+@include('partials._search')
+<h2>{{$listings['title']}}</h2>
+<p>
+    {{$listings['description']}}
+</p>
+@endsection
