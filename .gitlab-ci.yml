@@ -8,7 +8,7 @@ phpcompile:
   script:
     - php --version
 laravelCompile:
-  image: php
+  image: php:8.0
   stage: laravel
   script:
     - apt-get update && apt-get install -qy git zip curl libmcrypt-dev default-mysql-client libxml2-dev default-jre wget maven
