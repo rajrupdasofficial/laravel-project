@@ -77,6 +77,12 @@ class ListingController extends Controller
         $listing->update($formFields);
         //Session::flash('message',);
 
+
         return back()->with('message','Listing updated successfully');
+    }
+    //delete listing
+    public function destroy(Listing $listing){
+        $listing->delete();
+        return redirect('/')->with('message','Listing delete success');
     }
 }
