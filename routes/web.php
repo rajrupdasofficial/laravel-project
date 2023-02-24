@@ -60,3 +60,4 @@ Route::post('/users',[UserController::class,'store']);
 
 //logout
 Route::post('/logout',[UserController::class,'logout']);
+//Route
