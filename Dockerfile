@@ -1,8 +1,7 @@
 FROM php:8.0
 
-RUN apt-get update
-RUN apt-get install -qq git curl libmcrypt-dev libjpeg-dev libpng-dev libfreetype6-dev libbz2-dev
-RUN apt-get clean 
+RUN pacman -Syu
+RUN  pacman -S git curl libmcrypt libjpeg-turbo libpng  bzip2
 RUN docker-php-ext-install php-pgsql zip
 # Install Composer
 RUN curl --silent --show-error "https://getcomposer.org/installer" | php -- --install-dir=/usr/local/bin --filename=composer
