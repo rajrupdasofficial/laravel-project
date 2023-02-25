@@ -1,5 +1,5 @@
 FROM php:8.0
-
+FROM archlinux:latest
 RUN pacman -Syu
 RUN  pacman -S git curl libmcrypt libjpeg-turbo libpng  bzip2
 RUN docker-php-ext-install php-pgsql zip
