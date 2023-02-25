@@ -6,7 +6,7 @@ pipelines:
       - step:
           name: Docker Build and Push
           script:
-            - docker login --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD
+            - docker login --u $CI_REGISTRY_USER --p $CI_REGISTRY_PASSWORD
             - docker build -t $CI_REGISTRY_IMAGE .
             - docker images
             - docker push $CI_REGISTRY_IMAGE
