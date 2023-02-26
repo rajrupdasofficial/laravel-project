@@ -1,40 +1,15 @@
-image: php:8.0
+
+image: docker:20.10.16
 
 pipelines:
   branches:
-    master,hotdev:
+    '**':
       - step:
-          name: Node Build
-          image: node:latest
-          caches:
-            - node
+          name: Docker Build and Push
           script:
-            - npm install
-      - step:
-          name: Laravel App
-          caches:
-            - composer
-          script:
-            - mkdir /usr/share/man/man1
-            - apt-get update && apt-get install -qy git zip curl libmcrypt-dev default-mysql-client libxml2-dev default-jre wget maven
-            - yes | pecl install mcrypt
-            - docker-php-ext-install pdo_mysql bcmath
-            - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-            - composer install
-            - ln -f -s .env.pipelines .env
-            - php artisan migrate
-            - php artisan serve &
-            - sleep 5
-            - ./vendor/bin/phpunit
-            - curl -vk http://localhost:8000
+            - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+            - docker build -t $CI_REGISTRY_IMAGE .
+            - docker images
+            - docker push $CI_REGISTRY_IMAGE
           services:
-            - mysql
-definitions:
-  services:
-    mysql:
-      image: mysql
-      environment:
-        MYSQL_DATABASE: 'laragigs'
-        MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
-        MYSQL_USER: 'root'
-        MYSQL_PASSWORD: 'secret'
+            - docker
