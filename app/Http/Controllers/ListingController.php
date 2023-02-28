@@ -46,6 +46,8 @@ class ListingController extends Controller
             $formFields['logo'] = $request->file('logo')->store('logos', 'public');
         }
 
+        $formFields['user_id'] = auth()->id();
+
         Listing::create($formFields);
         //Session::flash('message',);
 
@@ -59,6 +61,10 @@ class ListingController extends Controller
 
     //show update data
     public function update(Request $request, Listing $listing){
+        //logged in user owener
+        if ($listing->user_id != auth()->id()){
+            abort(403, "You cannot perform this action");
+        }
         $formFields = $request->validate([
             'title'=> 'required',
            // 'logo' => 'required|image|mimes:png,jpg,jpeg',
@@ -82,7 +88,17 @@ class ListingController extends Controller
     }
     //delete listing
     public function destroy(Listing $listing){
+        if ($listing->user_id != auth()->id()){
+            abort(403, "You cannot perform this action");
+        }
         $listing->delete();
         return redirect('/')->with('message','Listing delete success');
+    }
+
+
+    //manage function
+
+    public function manage(){
+        return view('listings.manage' ,['listings'=>auth()->user()->listings()->get()]);
     }
 }
